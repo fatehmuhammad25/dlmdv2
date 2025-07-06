@@ -1,1 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My LMS Project - Home</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #6A0DAD;
+      margin: 20px 0 30px;
+      text-align: center;
+    }
+
+    .card {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #1a1a1a;
+      border: 2px solid #6A0DAD;
+      border-radius: 10px;
+      text-align: left;
+      width: 280px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #9b30ff;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .card p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .menu-grid a {
+      text-decoration: none;
+      padding: 15px;
+      background-color: #6A0DAD;
+      color: #ffffff;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s;
+      display: block;
+    }
+
+    .menu-grid a:hover {
+      background-color: #9b30ff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+    }
+
+    #feedback-banner {
+      margin: 20px 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner feedback -->
+  <div id="feedback-banner"></div>
+  
+  <h1>Welcome to My LMS Project</h1>
+
+  <div class="card">
+    <h2>About the Author</h2>
+    <p><strong>Name:</strong> Fateh Muhammad</p>
+    <p><strong>NIM:</strong> 2388203029</p>
+  </div>
+
+  <div class="menu-grid">
+    <a href="1.vygtosky.html">Vygotsky's Social Constructivism</a>
+    <a href="2.piaget.html">Piaget's Cognitive Constructivism</a>
+    <a href="3.sweller.html">Sweller's Cognitive Load Theory</a>
+    <a href="4.mayer.html">Mayer's Multimedia Learning Theory</a>
+  </div>
+
+  <div class="menu-grid" style="max-width:400px">
+    <a href="assessment.html">Assessment</a>
+    <a href="about.html">About This LMS</a>
+    <a href="feedback.html">Feedback</a>
+  </div>
+
+  <div id="visitor-count" style="margin: 20px 0; font-size: 16px; color: #ccc;"></div>
+
+  <div id="datetime" style="margin: 10px 0; font-size: 14px; color: #999;"></div>
+
+  <div id="quote" style="margin:10px 0; font-style: italic; color: #ccc;"></div>
+  
+  <footer>
+    &copy; 2025 Fateh's LMS | Made with 💜
+  </footer>
+
+  <!-- Script banner feedback -->
+  <script>
+    window.onload = function() {
+      let feedbacks = localStorage.getItem("feedbacks");
+      if (feedbacks) {
+        feedbacks = JSON.parse(feedbacks);
+        if (feedbacks.length > 0) {
+          let bannerText = feedbacks.join(" ★ ");
+          document.getElementById("feedback-banner").innerHTML =
+            `<marquee behavior="scroll" direction="left" scrollamount="5" 
+              style="
+                color:#fff;
+                font-size:16px;
+                background-color: rgba(154, 48, 255, 0.25);
+                padding: 10px;
+                border-radius: 6px;
+                margin-bottom: 20px;
+              ">
+              ${bannerText}
+            </marquee>`;
+        }
+      }
+    }
+  </script>
+
+  <script>
+  // Ambil jumlah kunjungan dari localStorage
+  let count = localStorage.getItem("visitCount");
+
+  // Kalau belum ada, mulai dari 0
+  if (!count) {
+    count = 1;
+  } else {
+    count = parseInt(count) + 1;
+  }
+
+  // Simpan jumlah kunjungan baru
+  localStorage.setItem("visitCount", count);
+
+  // Tampilkan ke halaman
+  document.getElementById("visitor-count").innerText = 
+    "Total Visits on This Browser: " + count;
+</script>
+
+<script>
+  // Panggil CountAPI untuk tambah 1 dan ambil hasilnya
+  fetch("https://api.countapi.xyz/update/fatehlms/myproject/?amount=1")
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("visitor-count").innerText = 
+        "Total Visits: " + data.value;
+    })
+    .catch(error => {
+      console.error("Failed to fetch visitor count:", error);
+    });
+</script>
+
+<script>
+  setInterval(() => {
+    const now = new Date();
+    document.getElementById("datetime").innerText = now.toLocaleString();
+  }, 1000);
+</script>
+
+</body>
+</html>
 
