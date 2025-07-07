@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mayer's Multimedia Learning Theory</title>
   <style>
     body {
@@ -10,12 +11,14 @@
       background-color: #000000;
       color: #ffffff;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
       color: #6A0DAD;
       text-align: center;
       margin-bottom: 20px;
+      font-size: 28px;
     }
 
     .content {
@@ -25,16 +28,19 @@
       padding: 20px;
       border-radius: 10px;
       border: 2px solid #6A0DAD;
+      box-sizing: border-box;
     }
 
     .content h2 {
       color: #9b30ff;
       margin-top: 20px;
+      font-size: 22px;
     }
 
     .content p {
       line-height: 1.6;
       margin-bottom: 15px;
+      font-size: 16px;
     }
 
     .content img {
@@ -42,7 +48,8 @@
       margin: 0 auto 20px;
       border-radius: 8px;
       border: 2px solid #6A0DAD;
-      max-width: 200px;
+      max-width: 100%;
+      height: auto;
     }
 
     .back-button {
@@ -56,6 +63,7 @@
       border-radius: 8px;
       width: 200px;
       transition: background-color 0.3s ease, transform 0.2s;
+      font-size: 16px;
     }
 
     .back-button:hover {
@@ -63,6 +71,29 @@
       transform: scale(1.05);
     }
 
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .content {
+        padding: 15px;
+      }
+
+      .content h2 {
+        font-size: 20px;
+      }
+
+      .content p {
+        font-size: 14px;
+      }
+
+      .back-button {
+        font-size: 14px;
+        padding: 10px 20px;
+        width: 180px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -70,7 +101,7 @@
   <h1>Mayer's Multimedia Learning Theory</h1>
 
   <div class="content">
-    <img src="https://psych.ucsb.edu/sites/default/files/styles/max_325x325/public/images/people/Faculty%20-%20Rich%20Mayer.jpg?itok=fEFSQqtb" alt="Multimedia Learning Illustration">
+    <img src="https://psych.ucsb.edu/sites/default/files/styles/max_325x325/public/images/people/Faculty%20-%20Rich%20Mayer.jpg?itok=fEFSQqtb" alt="Richard Mayer">
 
     <h2>Introduction</h2>
     <p>In the learning process, students often receive information in many different ways, such as text, images, and audio. To help students learn better, teachers need to manage how they present information. This is explained in Mayer’s Multimedia Learning Theory. In this explanation, I will describe how I use WhatsApp Group based on Mayer's theory.</p>
