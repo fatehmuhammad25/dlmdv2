@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feedback - My LMS Project</title>
   <style>
     body {
@@ -10,12 +11,14 @@
       background-color: #000000;
       color: #ffffff;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
       color: #6A0DAD;
       text-align: center;
       margin-bottom: 30px;
+      font-size: 28px;
     }
 
     .card {
@@ -25,11 +28,21 @@
       padding: 20px;
       border-radius: 10px;
       border: 2px solid #6A0DAD;
+      box-sizing: border-box;
     }
 
-    .card label, .card h2 {
+    .card h2 {
       color: #9b30ff;
       margin-top: 0;
+      font-size: 22px;
+    }
+
+    .card label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #9b30ff;
+      font-size: 16px;
     }
 
     input, textarea, select {
@@ -40,6 +53,8 @@
       color: #fff;
       border: 1px solid #6A0DAD;
       border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 15px;
     }
 
     .submit-button {
@@ -51,6 +66,13 @@
       cursor: pointer;
       display: block;
       margin: 30px auto 0;
+      transition: background-color 0.3s ease, transform 0.2s;
+      font-size: 16px;
+    }
+
+    .submit-button:hover {
+      background-color: #9b30ff;
+      transform: scale(1.05);
     }
 
     .back-button {
@@ -63,6 +85,41 @@
       text-align: center;
       border-radius: 8px;
       width: 200px;
+      transition: background-color 0.3s ease, transform 0.2s;
+      font-size: 16px;
+    }
+
+    .back-button:hover {
+      background-color: #9b30ff;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .card h2 {
+        font-size: 20px;
+      }
+
+      .card label {
+        font-size: 14px;
+      }
+
+      input, textarea, select {
+        font-size: 14px;
+        padding: 9px;
+      }
+
+      .submit-button, .back-button {
+        font-size: 14px;
+        padding: 10px 18px;
+      }
     }
   </style>
 </head>
@@ -120,7 +177,6 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
-    // Tangkap event submit form
     const form = document.getElementById("feedbackForm");
     form.addEventListener("submit", function (e) {
       e.preventDefault();
