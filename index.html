@@ -92,7 +92,7 @@
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     // Firebase Config
     const firebaseConfig = {
@@ -130,18 +130,22 @@
       }
     });
 
-    // Local visitor counter
-    let count = localStorage.getItem("visitCount");
-    if (!count) { count = 1; } else { count = parseInt(count) + 1; }
-    localStorage.setItem("visitCount", count);
-    document.getElementById("visitor-count").innerText = "Total Visits on This Browser: " + count;
+    // Global visitor counter via Firebase
+    const visitorCountRef = ref(database, "visitorCount");
+    runTransaction(visitorCountRef, (currentCount) => {
+      return (currentCount || 0) + 1;
+    });
+
+    onValue(visitorCountRef, (snapshot) => {
+      const count = snapshot.val();
+      document.getElementById("visitor-count").innerText = "Total Visits: " + count;
+    });
 
     // Tanggal & jam realtime
     setInterval(() => {
       const now = new Date();
       document.getElementById("datetime").innerText = now.toLocaleString();
     }, 1000);
-
   </script>
 
 </body>
