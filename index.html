@@ -105,6 +105,10 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+      body {
+       opacity: 0;
+       transition: opacity 1s ease;
+    }
   </style>
 </head>
 <body>
@@ -200,6 +204,12 @@
       const now = new Date();
       document.getElementById("datetime").innerText = now.toLocaleString();
     }, 1000);
+  </script>
+
+  <script>
+  window.onload = () => {
+    document.body.style.opacity = 1;
+  };
   </script>
 
 </body>
