@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ini wajib -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My LMS Project - Home</title>
   <style>
     body {
@@ -89,7 +89,6 @@
       box-sizing: border-box;
     }
 
-    /* Responsif tambahan */
     @media (max-width: 480px) {
       h1 {
         font-size: 24px;
@@ -106,9 +105,8 @@
 </head>
 <body>
 
-  <!-- Banner feedback -->
   <div id="feedback-banner"></div>
-  
+
   <h1>Welcome to My LMS Project</h1>
 
   <div class="card">
@@ -131,24 +129,39 @@
   </div>
 
   <div id="visitor-count" style="margin: 20px 0; font-size: 16px; color: #ccc;"></div>
-
   <div id="datetime" style="margin: 10px 0; font-size: 14px; color: #999;"></div>
-
   <div id="quote" style="margin:10px 0; font-style: italic; color: #ccc;"></div>
-  
-  <footer>
-    &copy; 2025 Fateh's LMS | Made with 💜
-  </footer>
 
-  <!-- Script banner feedback -->
+  <footer>&copy; 2025 Fateh's LMS | Made with 💜</footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
   <script>
-    window.onload = function() {
-      let feedbacks = localStorage.getItem("feedbacks");
-      if (feedbacks) {
-        feedbacks = JSON.parse(feedbacks);
-        if (feedbacks.length > 0) {
-          let bannerText = feedbacks.join(" ★ ");
-          document.getElementById("feedback-banner").innerHTML =
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFSZxCmEvJtsOUuQXv2MfQlCZxxa5mMcM",
+      authDomain: "dlmdv2.firebaseapp.com",
+      databaseURL: "https://dlmdv2-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "dlmdv2",
+      storageBucket: "dlmdv2.firebasestorage.app",
+      messagingSenderId: "542661735960",
+      appId: "1:542661735960:web:2213eecd360662bc1ef56d",
+      measurementId: "G-NNBDXELD17"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Load feedback dari database ke banner
+    function loadFeedbackBanner() {
+      const feedbackRef = database.ref("feedbacks");
+      feedbackRef.on("value", (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          let feedbackArray = Object.values(data);
+          let bannerText = feedbackArray.join(" ★ ");
+          document.getElementById("feedback-banner").innerHTML = 
             `<marquee behavior="scroll" direction="left" scrollamount="5" 
               style="
                 color:#fff;
@@ -160,49 +173,50 @@
               ">
               ${bannerText}
             </marquee>`;
+        } else {
+          document.getElementById("feedback-banner").innerHTML = "";
         }
-      }
+      });
     }
+
+    window.onload = function() {
+      loadFeedbackBanner();
+    };
   </script>
 
   <script>
-  // Ambil jumlah kunjungan dari localStorage
-  let count = localStorage.getItem("visitCount");
+    // Local visit counter
+    let count = localStorage.getItem("visitCount");
+    if (!count) {
+      count = 1;
+    } else {
+      count = parseInt(count) + 1;
+    }
+    localStorage.setItem("visitCount", count);
+    document.getElementById("visitor-count").innerText = 
+      "Total Visits on This Browser: " + count;
+  </script>
 
-  // Kalau belum ada, mulai dari 0
-  if (!count) {
-    count = 1;
-  } else {
-    count = parseInt(count) + 1;
-  }
+  <script>
+    // Global visitor count pakai CountAPI
+    fetch("https://api.countapi.xyz/update/fatehlms/myproject/?amount=1")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("visitor-count").innerText = 
+          "Total Visits: " + data.value;
+      })
+      .catch(error => {
+        console.error("Failed to fetch visitor count:", error);
+      });
+  </script>
 
-  // Simpan jumlah kunjungan baru
-  localStorage.setItem("visitCount", count);
-
-  // Tampilkan ke halaman
-  document.getElementById("visitor-count").innerText = 
-    "Total Visits on This Browser: " + count;
-</script>
-
-<script>
-  // Panggil CountAPI untuk tambah 1 dan ambil hasilnya
-  fetch("https://api.countapi.xyz/update/fatehlms/myproject/?amount=1")
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("visitor-count").innerText = 
-        "Total Visits: " + data.value;
-    })
-    .catch(error => {
-      console.error("Failed to fetch visitor count:", error);
-    });
-</script>
-
-<script>
-  setInterval(() => {
-    const now = new Date();
-    document.getElementById("datetime").innerText = now.toLocaleString();
-  }, 1000);
-</script>
+  <script>
+    // Tanggal & Jam realtime
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById("datetime").innerText = now.toLocaleString();
+    }, 1000);
+  </script>
 
 </body>
 </html>
