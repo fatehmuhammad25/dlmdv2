@@ -16,8 +16,29 @@
     h1 {
       color: #6A0DAD;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       font-size: 28px;
+    }
+
+    .progress-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      background-color: #333;
+      border: 1px solid #6A0DAD;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 20px;
+      width: 0%;
+      background-color: #6A0DAD;
+      text-align: center;
+      color: #fff;
+      line-height: 20px;
+      font-size: 14px;
+      transition: width 0.3s ease;
     }
 
     .card {
@@ -99,25 +120,11 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 24px;
-      }
-      .card {
-        padding: 15px;
-      }
-      .card h2 {
-        font-size: 20px;
-      }
-      .card p {
-        font-size: 14px;
-      }
-      .card label {
-        font-size: 14px;
-      }
-      .submit-button, .back-button {
-        font-size: 14px;
-        padding: 10px 18px;
-      }
+      h1 { font-size: 24px; }
+      .card { padding: 15px; }
+      .card h2 { font-size: 20px; }
+      .card p, .card label { font-size: 14px; }
+      .submit-button, .back-button { font-size: 14px; padding: 10px 18px; }
     }
   </style>
 
@@ -149,11 +156,55 @@
       window.location.href = "hasil.html";
       return false;
     }
+
+    function updateProgress() {
+      const totalEssay = 5;
+      const totalMC = 10;
+      let filledEssay = 0;
+      let filledMC = 0;
+
+      const essays = document.querySelectorAll('textarea');
+      essays.forEach(e => { if (e.value.trim() !== "") filledEssay++; });
+
+      for (let i = 1; i <= totalMC; i++) {
+        const options = document.getElementsByName("q" + i);
+        for (let j = 0; j < options.length; j++) {
+          if (options[j].checked) {
+            filledMC++;
+            break;
+          }
+        }
+      }
+
+      const totalFilled = filledEssay + filledMC;
+      const totalQuestions = totalEssay + totalMC;
+      const percentage = Math.round((totalFilled / totalQuestions) * 100);
+
+      const progressBar = document.getElementById("progressBar");
+      progressBar.style.width = percentage + "%";
+      progressBar.innerText = percentage + "%";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('textarea').forEach(e => {
+        e.addEventListener("input", updateProgress);
+      });
+      for (let i = 1; i <= 10; i++) {
+        const options = document.getElementsByName("q" + i);
+        options.forEach(o => {
+          o.addEventListener("change", updateProgress);
+        });
+      }
+    });
   </script>
 </head>
 <body>
 
   <h1>Assessment</h1>
+
+  <div class="progress-container">
+    <div id="progressBar" class="progress-bar">0%</div>
+  </div>
 
   <form onsubmit="return validateForm()">
 
