@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assessment Submitted - My LMS Project</title>
+  <title>Assessment Result - My LMS Project</title>
   <style>
     body {
       margin: 0;
@@ -13,8 +13,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
       padding: 20px;
       text-align: center;
       box-sizing: border-box;
@@ -26,9 +24,9 @@
       font-size: 32px;
     }
 
-    p {
+    p, .score, .time {
       font-size: 18px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       line-height: 1.5;
     }
 
@@ -41,6 +39,7 @@
       border-radius: 8px;
       transition: background-color 0.3s ease, transform 0.2s;
       font-size: 16px;
+      margin-top: 20px;
     }
 
     .back-button:hover {
@@ -48,26 +47,82 @@
       transform: scale(1.05);
     }
 
+    .rating {
+      margin: 20px 0;
+    }
+
+    .rating button {
+      background-color: #333;
+      border: 2px solid #6A0DAD;
+      color: #fff;
+      font-size: 18px;
+      padding: 8px 14px;
+      margin: 0 5px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .rating button:hover {
+      background-color: #9b30ff;
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 26px;
       }
-      p {
+      p, .score, .time {
         font-size: 16px;
       }
       .back-button {
         font-size: 14px;
         padding: 10px 20px;
       }
+      .rating button {
+        font-size: 16px;
+        padding: 8px 12px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Thank You!</h1>
-  <p>Your assessment has been successfully submitted.</p>
+  <h1>Assessment Completed!</h1>
+  <p>Thank you for completing the assessment.</p>
+
+  <div class="score" id="score-result">Score: Calculating...</div>
+  <div class="time" id="time-result"></div>
+
+  <div class="rating">
+    <p>Rate your experience:</p>
+    <button onclick="rate(1)">😐</button>
+    <button onclick="rate(2)">🙂</button>
+    <button onclick="rate(3)">😃</button>
+  </div>
 
   <a href="index.html" class="back-button">Back to Home</a>
+
+  <script>
+    // Ambil skor dari localStorage (kalau assessment halaman sebelumnya simpan skor)
+    let score = localStorage.getItem("finalScore") || "Not recorded";
+    document.getElementById("score-result").innerText = "Your Score: " + score + " / 10";
+
+    // Waktu pengerjaan (jika kamu buat fitur timer nanti)
+    let timeSpent = localStorage.getItem("timeSpent");
+    if(timeSpent){
+      document.getElementById("time-result").innerText = "Time taken: " + timeSpent;
+    }
+
+    // Fungsi rating tombol
+    function rate(value){
+      alert("Thanks for your feedback! You rated: " + value);
+      // Di sini bisa lanjut kirim ke Firebase kalau kamu mau simpan ratingnya
+    }
+
+    // Clear localStorage kalau perlu (optional)
+    localStorage.removeItem("finalScore");
+    localStorage.removeItem("timeSpent");
+  </script>
 
 </body>
 </html>
