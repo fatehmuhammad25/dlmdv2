@@ -104,10 +104,11 @@
       measurementId: "G-NNBDXELD17"
     };
 
+    // Inisialisasi Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // Fungsi validasi & kirim feedback ke Firebase
+    // Fungsi submit feedback ke database
     function validateFeedback() {
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -119,25 +120,23 @@
         return false;
       }
 
-      // Format feedback
       const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
 
-      // Push ke Firebase
+      // Simpan ke Firebase Realtime Database
       const feedbackRef = database.ref("feedbacks");
       feedbackRef.push(feedbackText)
         .then(() => {
           alert("Thank you for your feedback!");
           window.location.href = "index.html";
         })
-        .catch(error => {
-          console.error("Error saving feedback: ", error);
-          alert("Failed to send feedback.");
+        .catch((error) => {
+          console.error("Failed to submit feedback:", error);
+          alert("Failed to submit feedback. Please try again.");
         });
 
       return false;
     }
   </script>
-
 </head>
 <body>
 
