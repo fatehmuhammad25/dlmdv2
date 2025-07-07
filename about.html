@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About This LMS - My LMS Project</title>
   <style>
     body {
@@ -16,6 +17,7 @@
       color: #6A0DAD;
       text-align: center;
       margin-bottom: 30px;
+      font-size: 28px;
     }
 
     .card {
@@ -26,11 +28,13 @@
       border-radius: 10px;
       border: 2px solid #6A0DAD;
       text-align: justify;
+      box-sizing: border-box;
     }
 
     .card h2 {
       color: #9b30ff;
       margin-top: 0;
+      font-size: 22px;
     }
 
     .card p {
@@ -56,6 +60,19 @@
       background-color: #9b30ff;
       transform: scale(1.05);
     }
+
+    /* Responsive tambahan */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+      .card {
+        padding: 15px;
+      }
+      .card p {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -65,13 +82,55 @@
   <div class="card">
     <h2>Project Overview</h2>
     <p>
-      This Learning Management System (LMS) project was created by Fateh Muhammad as a final assignment for the course <em>Digital Learning Media Development</em>. The goal is to provide a simple, accessible, and interactive platform for delivering learning materials using digital media.
+      This Learning Management System (LMS) was designed and developed by <strong>Fateh Muhammad</strong> as a final assignment for the course <em>Digital Learning Media Development</em>. The aim is to deliver an engaging, accessible, and interactive digital platform for learning key educational theories.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>System Architecture & Tools</h2>
+    <p>
+      The LMS was built using pure <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>, ensuring it remains lightweight and deployable on free hosting services like <em>GitHub Pages</em>. No backend server is required, but it uses <strong>Firebase Realtime Database</strong> for real-time data storage and synchronization.
     </p>
     <p>
-      The LMS is built using HTML, CSS, and JavaScript without a server backend, making it lightweight and easy to deploy via platforms like GitHub Pages. It applies four major learning theories: Vygotsky's Social Constructivism, Piaget's Cognitive Constructivism, Sweller's Cognitive Load Theory, and Mayer's Multimedia Learning Theory.
+      Key libraries and services used:
+      <ul>
+        <li>🔥 <strong>Firebase Realtime Database</strong> — for storing and retrieving feedback and visitor count across all devices in real time.</li>
+        <li>📊 <strong>CountAPI</strong> — initially used for global visitor tracking before migrating to Firebase.</li>
+        <li>💾 <strong>LocalStorage API</strong> — to store local visitor counts before integrating Firebase.</li>
+        <li>💻 Pure <strong>Vanilla JavaScript</strong> — to handle DOM interactions, form validation, real-time date/time display, and dynamic content rendering.</li>
+        <li>🎨 Custom <strong>dark theme UI</strong> — styled using modern CSS for responsive design, with mobile-first layout considerations.</li>
+      </ul>
     </p>
+  </div>
+
+  <div class="card">
+    <h2>Learning Theories Included</h2>
     <p>
-      Main features include digital learning materials for each theory, assessments to test understanding, a feedback form to collect responses from users, and a dynamic feedback banner displayed on the homepage.
+      This LMS integrates four core educational theories to guide the learning content:
+      <ol>
+        <li><strong>Vygotsky's Social Constructivism</strong></li>
+        <li><strong>Piaget's Cognitive Constructivism</strong></li>
+        <li><strong>Sweller's Cognitive Load Theory</strong></li>
+        <li><strong>Mayer's Multimedia Learning Theory</strong></li>
+      </ol>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Key Features</h2>
+    <p>
+      📖 Structured learning materials for each theory, presented through clean and readable HTML pages.<br>
+      📝 Assessments to evaluate learners' comprehension of each theory.<br>
+      💬 A feedback form integrated with Firebase, enabling real-time feedback collection and display via a scrolling banner on the homepage.<br>
+      📈 Visitor tracking system using Firebase Realtime Database for global visit counts, replacing previous LocalStorage and CountAPI systems.<br>
+      📱 Fully responsive layout, optimized for both desktop and mobile devices.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Deployment & Access</h2>
+    <p>
+      The LMS is deployed via <strong>GitHub Pages</strong>, making it publicly accessible without needing server hosting. Firebase Realtime Database handles cloud data storage seamlessly.
     </p>
   </div>
 
