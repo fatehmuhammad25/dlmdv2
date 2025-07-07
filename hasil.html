@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Assessment Result - My LMS Project</title>
   <style>
     body {
@@ -13,6 +13,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       padding: 20px;
       text-align: center;
       box-sizing: border-box;
@@ -21,17 +23,48 @@
     h1 {
       color: #6A0DAD;
       margin-bottom: 20px;
-      font-size: 32px;
+      font-size: 36px;
     }
 
-    p, .score, .time {
+    .checkmark {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .result {
       font-size: 18px;
       margin-bottom: 20px;
       line-height: 1.5;
     }
 
-    .back-button {
-      display: inline-block;
+    ul {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    ul li {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .correct {
+      color: #00FF7F;
+    }
+
+    .wrong {
+      color: #FF6347;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .button {
       padding: 12px 24px;
       background-color: #6A0DAD;
       color: #ffffff;
@@ -39,89 +72,62 @@
       border-radius: 8px;
       transition: background-color 0.3s ease, transform 0.2s;
       font-size: 16px;
-      margin-top: 20px;
     }
 
-    .back-button:hover {
+    .button:hover {
       background-color: #9b30ff;
       transform: scale(1.05);
     }
 
-    .rating {
-      margin: 20px 0;
-    }
-
-    .rating button {
-      background-color: #333;
-      border: 2px solid #6A0DAD;
-      color: #fff;
-      font-size: 18px;
-      padding: 8px 14px;
-      margin: 0 5px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .rating button:hover {
-      background-color: #9b30ff;
+    footer {
+      margin-top: 50px;
+      font-size: 13px;
+      color: #888;
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 26px;
+        font-size: 28px;
       }
-      p, .score, .time {
+      .result {
         font-size: 16px;
       }
-      .back-button {
+      .button {
         font-size: 14px;
         padding: 10px 20px;
-      }
-      .rating button {
-        font-size: 16px;
-        padding: 8px 12px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Assessment Completed!</h1>
-  <p>Thank you for completing the assessment.</p>
+  <div class="checkmark">✅</div>
+  <h1>Assessment Result</h1>
 
-  <div class="score" id="score-result">Score: Calculating...</div>
-  <div class="time" id="time-result"></div>
+  <div class="result" id="score"></div>
 
-  <div class="rating">
-    <p>Rate your experience:</p>
-    <button onclick="rate(1)">😐</button>
-    <button onclick="rate(2)">🙂</button>
-    <button onclick="rate(3)">😃</button>
+  <ul id="result-list"></ul>
+
+  <div class="button-group">
+    <a href="index.html" class="button">🏠 Back to Home</a>
+    <a href="assessment.html" class="button">↻ Try Again</a>
   </div>
 
-  <a href="index.html" class="back-button">Back to Home</a>
+  <footer>&copy; 2025 Fateh's LMS | Made with 💜</footer>
 
   <script>
-    // Ambil skor dari localStorage (kalau assessment halaman sebelumnya simpan skor)
-    let score = localStorage.getItem("finalScore") || "Not recorded";
-    document.getElementById("score-result").innerText = "Your Score: " + score + " / 10";
+    // Ambil hasil dari localStorage
+    const score = localStorage.getItem("score") || 0;
+    const resultArray = JSON.parse(localStorage.getItem("resultArray")) || [];
 
-    // Waktu pengerjaan (jika kamu buat fitur timer nanti)
-    let timeSpent = localStorage.getItem("timeSpent");
-    if(timeSpent){
-      document.getElementById("time-result").innerText = "Time taken: " + timeSpent;
-    }
+    document.getElementById("score").innerText = `Your score: ${score}/10`;
 
-    // Fungsi rating tombol
-    function rate(value){
-      alert("Thanks for your feedback! You rated: " + value);
-      // Di sini bisa lanjut kirim ke Firebase kalau kamu mau simpan ratingnya
-    }
-
-    // Clear localStorage kalau perlu (optional)
-    localStorage.removeItem("finalScore");
-    localStorage.removeItem("timeSpent");
+    const list = document.getElementById("result-list");
+    resultArray.forEach((status, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `Question ${index + 1}: <span class="${status ? 'correct' : 'wrong'}">${status ? 'Correct ✅' : 'Wrong ❌'}</span>`;
+      list.appendChild(li);
+    });
   </script>
 
 </body>
