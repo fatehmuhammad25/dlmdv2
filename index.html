@@ -6,10 +6,13 @@
   <title>Digital Learning Media Development - Home</title>
   <link rel="icon" type="image/png" href="uwgm.png">
   <style>
+    /* Reset & Base */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #000000;
+      background: linear-gradient(270deg, #000000, #1a1a1a, #000000);
+      background-size: 600% 600%;
+      animation: gradientShift 10s ease infinite;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -17,13 +20,17 @@
       justify-content: flex-start;
       min-height: 100vh;
       padding: 20px;
+      opacity: 0;
+      transition: opacity 1s ease;
     }
+
     h1 {
       color: #6A0DAD;
       margin: 20px 0 30px;
       text-align: center;
       font-size: 28px;
     }
+
     .card {
       margin-bottom: 30px;
       padding: 20px;
@@ -34,12 +41,18 @@
       width: 100%;
       max-width: 400px;
       box-sizing: border-box;
+      transition: box-shadow 0.3s ease;
     }
+
     .card h2 {
       margin-top: 0;
       color: #9b30ff;
       font-size: 22px;
       text-align: center;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 15px #9b30ff;
     }
 
     /* Grid teori: fix 2 kolom */
@@ -65,6 +78,8 @@
     }
 
     .menu-grid a, .menu-grid-theory a {
+      position: relative;
+      overflow: hidden;
       text-decoration: none;
       padding: 15px;
       background-color: #6A0DAD;
@@ -75,60 +90,78 @@
       transition: background-color 0.3s ease, transform 0.2s;
       display: block;
     }
+
     .menu-grid a:hover, .menu-grid-theory a:hover {
       background-color: #9b30ff;
       transform: scale(1.05);
     }
+
+    .menu-grid a::after, .menu-grid-theory a::after {
+      content: '';
+      position: absolute;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      transform: scale(0);
+      opacity: 0;
+      pointer-events: none;
+      width: 100px;
+      height: 100px;
+      transition: transform 0.6s ease, opacity 1s;
+    }
+
+    .menu-grid a:active::after, .menu-grid-theory a:active::after {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+      top: 50%;
+      left: 50%;
+    }
+
     footer {
       margin-top: 50px;
       font-size: 14px;
       color: #888;
       text-align: center;
     }
+
     #feedback-banner {
       margin: 20px 0;
       width: 100%;
       box-sizing: border-box;
     }
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 24px;
-      }
-      .card {
-        padding: 15px;
-      }
-      .menu-grid a, .menu-grid-theory a {
-        font-size: 14px;
-        padding: 12px;
-      }
-      .menu-grid-theory {
-        grid-template-columns: 1fr 1fr;
-      }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-      body {
-       opacity: 0;
-       transition: opacity 1s ease;
+
+    @media (max-width: 480px) {
+      h1 { font-size: 24px; }
+      .card { padding: 15px; }
+      .menu-grid a, .menu-grid-theory a { font-size: 14px; padding: 12px; }
+      .menu-grid-theory { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
   <div id="feedback-banner"></div>
+
   <h1>Welcome to My LMS Project</h1>
 
-<div style="background-color: #1a1a1a; border: 2px solid #6A0DAD; border-radius: 10px; padding: 20px; max-width: 600px; margin: 10px auto 30px; box-sizing: border-box;">
-  <p style="text-align: center; color: #ccc; line-height: 1.5; font-size: 16px; margin: 0;">
-    This Learning Management System provides essential theories in educational psychology, including Vygotsky's Social Constructivism, Piaget's Cognitive Constructivism, Cognitive Load Theory, and Multimedia Learning Theory along with interactive assessments and real-time visitor tracking.
-  </p>
-</div>
+  <div style="background-color: #1a1a1a; border: 2px solid #6A0DAD; border-radius: 10px; padding: 20px; max-width: 600px; margin: 10px auto 30px; box-sizing: border-box;">
+    <p style="text-align: center; color: #ccc; line-height: 1.5; font-size: 16px; margin: 0;">
+      This Learning Management System provides essential theories in educational psychology, including Vygotsky's Social Constructivism, Piaget's Cognitive Constructivism, Cognitive Load Theory, and Multimedia Learning Theory along with interactive assessments and real-time visitor tracking.
+    </p>
+  </div>
 
-<div class="card">
-  <h2>About the Author</h2>
-  <p><strong>Name:</strong> Fateh Muhammad</p>
-  <p><strong>NIM:</strong> 2388203029</p>
-  <p><strong>Major:</strong> English Language Education</p>
-  <p><strong>University:</strong> Universitas Widya Gama Mahakam Samarinda</p>
-</div>
+  <div class="card">
+    <h2>About the Author</h2>
+    <p><strong>Name:</strong> Fateh Muhammad</p>
+    <p><strong>NIM:</strong> 2388203029</p>
+    <p><strong>Major:</strong> English Language Education</p>
+    <p><strong>University:</strong> Universitas Widya Gama Mahakam Samarinda</p>
+  </div>
 
   <div class="menu-grid-theory">
     <a href="1.vygtosky.html">Vygotsky's Social Constructivism</a>
@@ -147,12 +180,12 @@
   <div id="visitor-count" style="margin: 20px 0; font-size: 16px; color: #ccc;"></div>
   <div id="datetime" style="margin: 10px 0; font-size: 14px; color: #999;"></div>
 
-<footer>
-  &copy; 2025 Fateh's LMS | Made with 💜<br>
-  <span style="font-size:13px; color:#666;">Last updated: July 6, 2025</span>
-</footer>
+  <footer>
+    &copy; 2025 Fateh's LMS | Made with 💜<br>
+    <span style="font-size:13px; color:#666;">Last updated: July 6, 2025</span>
+  </footer>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDK & JS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -171,6 +204,7 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
+    // Feedback banner
     const feedbackRef = ref(database, "feedbacks/");
     onValue(feedbackRef, (snapshot) => {
       const data = snapshot.val();
@@ -179,37 +213,49 @@
         const bannerText = feedbackArray.join(" ★ ");
         document.getElementById("feedback-banner").innerHTML = `
           <marquee behavior="scroll" direction="left" scrollamount="5"
-            style="color:#fff;font-size:16px;
-            background-color: rgba(154, 48, 255, 0.25);
+            style="color:#fff;font-size:16px; background-color: rgba(154, 48, 255, 0.25);
             padding: 10px; border-radius: 6px; margin-bottom: 20px;">
             ${bannerText}
           </marquee>
         `;
-      } else {
-        document.getElementById("feedback-banner").innerHTML = "";
       }
     });
 
+    // Visitor count
     const visitorCountRef = ref(database, "visitorCount");
-    runTransaction(visitorCountRef, (currentCount) => {
-      return (currentCount || 0) + 1;
-    });
-
+    runTransaction(visitorCountRef, (currentCount) => (currentCount || 0) + 1);
     onValue(visitorCountRef, (snapshot) => {
-      const count = snapshot.val();
-      document.getElementById("visitor-count").innerText = "Total Visits: " + count;
+      document.getElementById("visitor-count").innerText = "Total Visits: " + snapshot.val();
     });
 
+    // DateTime
     setInterval(() => {
       const now = new Date();
       document.getElementById("datetime").innerText = now.toLocaleString();
     }, 1000);
   </script>
 
+  <!-- Fade in + Typing Text -->
   <script>
-  window.onload = () => {
-    document.body.style.opacity = 1;
-  };
+    function typeWriter(element, text, speed) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    window.onload = () => {
+      document.body.style.opacity = 1;
+      const h1 = document.querySelector("h1");
+      const originalText = h1.textContent;
+      h1.textContent = "";
+      typeWriter(h1, originalText, 80);
+    };
   </script>
 
 </body>
