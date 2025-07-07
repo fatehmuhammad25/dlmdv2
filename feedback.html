@@ -87,7 +87,27 @@
     }
   </style>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
   <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFSZxCmEvJtsOUuQXv2MfQlCZxxa5mMcM",
+      authDomain: "dlmdv2.firebaseapp.com",
+      databaseURL: "https://dlmdv2-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "dlmdv2",
+      storageBucket: "dlmdv2.firebasestorage.app",
+      messagingSenderId: "542661735960",
+      appId: "1:542661735960:web:2213eecd360662bc1ef56d",
+      measurementId: "G-NNBDXELD17"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Fungsi validasi & kirim feedback ke Firebase
     function validateFeedback() {
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -99,23 +119,21 @@
         return false;
       }
 
-      // Gabungkan feedback
+      // Format feedback
       const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
 
-      // Ambil feedback yang sudah ada
-      let feedbacks = localStorage.getItem("feedbacks");
-      if (feedbacks) {
-        feedbacks = JSON.parse(feedbacks);
-      } else {
-        feedbacks = [];
-      }
+      // Push ke Firebase
+      const feedbackRef = database.ref("feedbacks");
+      feedbackRef.push(feedbackText)
+        .then(() => {
+          alert("Thank you for your feedback!");
+          window.location.href = "index.html";
+        })
+        .catch(error => {
+          console.error("Error saving feedback: ", error);
+          alert("Failed to send feedback.");
+        });
 
-      // Tambahkan feedback baru
-      feedbacks.push(feedbackText);
-      localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-
-      alert("Thank you for your feedback!");
-      window.location.href = "index.html";
       return false;
     }
   </script>
