@@ -67,55 +67,57 @@
   </style>
 
   <script>
-    function validateForm() {
-      const essays = document.querySelectorAll('textarea');
-      for (let i = 0; i < essays.length; i++) {
-        if (essays[i].value.trim() === "") {
-          alert("Please fill in all essay questions before submitting.");
-          return false;
-        }
-      }
-
-      // Multiple choice scoring
-      let score = 0;
-      const answerKey = {
-        q1: "Vygotsky",
-        q2: "Piaget",
-        q3: "Sweller",
-        q4: "Visual and auditory learning",
-        q5: "Clear instruction",
-        q6: "Temporary support",
-        q7: "Vygotsky",
-        q8: "Piaget",
-        q9: "Multimedia Learning",
-        q10: "Natural task difficulty"
-      };
-
-      for (let i = 1; i <= 10; i++) {
-        const options = document.getElementsByName("q" + i);
-        let selected = false;
-        for (let j = 0; j < options.length; j++) {
-          if (options[j].checked) {
-            selected = true;
-            if (options[j].value === answerKey["q" + i]) {
-              score++;
-            }
-            break;
-          }
-        }
-        if (!selected) {
-          alert("Please answer all multiple choice questions before submitting.");
-          return false;
-        }
-      }
-
-      // Simpan skor ke localStorage
-      localStorage.setItem("finalScore", score);
-
-      // Redirect ke hasil.html
-      window.location.href = "hasil.html";
+function validateForm() {
+  const essays = document.querySelectorAll('textarea');
+  for (let i = 0; i < essays.length; i++) {
+    if (essays[i].value.trim() === "") {
+      alert("Please fill in all essay questions before submitting.");
       return false;
     }
+  }
+
+  const answerKey = {
+    q1: "Vygotsky",
+    q2: "Piaget",
+    q3: "Sweller",
+    q4: "Visual and auditory learning",
+    q5: "Clear instruction",
+    q6: "Temporary support",
+    q7: "Vygotsky",
+    q8: "Piaget",
+    q9: "Multimedia Learning",
+    q10: "Natural task difficulty"
+  };
+
+  let score = 0;
+  let resultArray = [];
+
+  for (let i = 1; i <= 10; i++) {
+    const options = document.getElementsByName("q" + i);
+    let selectedValue = "";
+    for (let j = 0; j < options.length; j++) {
+      if (options[j].checked) {
+        selectedValue = options[j].value;
+        break;
+      }
+    }
+    if (!selectedValue) {
+      alert("Please answer all multiple choice questions before submitting.");
+      return false;
+    }
+    const isCorrect = selectedValue === answerKey["q" + i];
+    resultArray.push(isCorrect);
+    if (isCorrect) score++;
+  }
+
+  // Simpan ke localStorage
+  localStorage.setItem("score", score);
+  localStorage.setItem("resultArray", JSON.stringify(resultArray));
+
+  window.location.href = "hasil.html";
+  return false;
+}
+
 
     function updateProgress() {
       const totalEssay = 5;
