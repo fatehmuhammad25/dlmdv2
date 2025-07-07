@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assessment Submitted - My LMS Project</title>
   <style>
     body {
@@ -14,17 +15,21 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      padding: 20px;
       text-align: center;
+      box-sizing: border-box;
     }
 
     h1 {
       color: #6A0DAD;
       margin-bottom: 20px;
+      font-size: 32px;
     }
 
     p {
       font-size: 18px;
       margin-bottom: 30px;
+      line-height: 1.5;
     }
 
     .back-button {
@@ -35,11 +40,25 @@
       text-decoration: none;
       border-radius: 8px;
       transition: background-color 0.3s ease, transform 0.2s;
+      font-size: 16px;
     }
 
     .back-button:hover {
       background-color: #9b30ff;
       transform: scale(1.05);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 26px;
+      }
+      p {
+        font-size: 16px;
+      }
+      .back-button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
