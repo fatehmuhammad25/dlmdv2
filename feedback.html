@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback - My LMS Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #6A0DAD;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      max-width: 800px;
+      margin: 0 auto 30px;
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #6A0DAD;
+    }
+
+    .card h2 {
+      color: #9b30ff;
+      margin-top: 0;
+    }
+
+    .card label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .card input[type="text"],
+    .card input[type="email"],
+    .card textarea,
+    .card select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #6A0DAD;
+      border-radius: 6px;
+    }
+
+    .submit-button {
+      background-color: #6A0DAD;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+      display: block;
+      margin: 30px auto 0;
+    }
+
+    .submit-button:hover {
+      background-color: #9b30ff;
+      transform: scale(1.05);
+    }
+
+    .back-button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 24px;
+      background-color: #6A0DAD;
+      color: #ffffff;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 8px;
+      width: 200px;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .back-button:hover {
+      background-color: #9b30ff;
+      transform: scale(1.05);
+    }
+  </style>
+
+  <script>
+    function validateFeedback() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const rating = document.getElementById("rating").value;
+      const message = document.getElementById("message").value.trim();
+
+      if (name === "" || email === "" || rating === "" || message === "") {
+        alert("Please fill in all fields before submitting your feedback.");
+        return false;
+      }
+
+      // Gabungkan feedback
+      const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
+
+      // Ambil feedback yang sudah ada
+      let feedbacks = localStorage.getItem("feedbacks");
+      if (feedbacks) {
+        feedbacks = JSON.parse(feedbacks);
+      } else {
+        feedbacks = [];
+      }
+
+      // Tambahkan feedback baru
+      feedbacks.push(feedbackText);
+      localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+
+      alert("Thank you for your feedback!");
+      window.location.href = "index.html";
+      return false;
+    }
+  </script>
+
+</head>
+<body>
+
+  <h1>Feedback</h1>
+
+  <form onsubmit="return validateFeedback()">
+    <div class="card">
+      <h2>We'd love to hear from you!</h2>
+
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name">
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email">
+
+      <label for="rating">Rate Our LMS (1 = Poor, 5 = Excellent):</label>
+      <select id="rating" name="rating">
+        <option value="">-- Select Rating --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label for="message">Your Feedback:</label>
+      <textarea id="message" name="message" rows="5"></textarea>
+
+      <button type="submit" class="submit-button">Submit Feedback</button>
+    </div>
+  </form>
+
+  <a href="index.html" class="back-button">Back to Home</a>
+
+</body>
+</html>
