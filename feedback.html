@@ -86,57 +86,6 @@
       transform: scale(1.05);
     }
   </style>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-
-  <script>
-    // Konfigurasi Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyCFSZxCmEvJtsOUuQXv2MfQlCZxxa5mMcM",
-      authDomain: "dlmdv2.firebaseapp.com",
-      databaseURL: "https://dlmdv2-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "dlmdv2",
-      storageBucket: "dlmdv2.firebasestorage.app",
-      messagingSenderId: "542661735960",
-      appId: "1:542661735960:web:2213eecd360662bc1ef56d",
-      measurementId: "G-NNBDXELD17"
-    };
-
-    // Inisialisasi Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // Fungsi submit feedback ke database
-    function validateFeedback() {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const rating = document.getElementById("rating").value;
-      const message = document.getElementById("message").value.trim();
-
-      if (name === "" || email === "" || rating === "" || message === "") {
-        alert("Please fill in all fields before submitting your feedback.");
-        return false;
-      }
-
-      const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
-
-      // Simpan ke Firebase Realtime Database
-      const feedbackRef = database.ref("feedbacks");
-      feedbackRef.push(feedbackText)
-        .then(() => {
-          alert("Thank you for your feedback!");
-          window.location.href = "index.html";
-        })
-        .catch((error) => {
-          console.error("Failed to submit feedback:", error);
-          alert("Failed to submit feedback. Please try again.");
-        });
-
-      return false;
-    }
-  </script>
 </head>
 <body>
 
@@ -170,6 +119,56 @@
   </form>
 
   <a href="index.html" class="back-button">Back to Home</a>
+
+  <!-- Firebase SDK (type module) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFSZxCmEvJtsOUuQXv2MfQlCZxxa5mMcM",
+      authDomain: "dlmdv2.firebaseapp.com",
+      databaseURL: "https://dlmdv2-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "dlmdv2",
+      storageBucket: "dlmdv2.appspot.com",
+      messagingSenderId: "542661735960",
+      appId: "1:542661735960:web:2213eecd360662bc1ef56d",
+      measurementId: "G-NNBDXELD17"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Fungsi kirim feedback ke database
+    window.validateFeedback = function () {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const rating = document.getElementById("rating").value;
+      const message = document.getElementById("message").value.trim();
+
+      if (name === "" || email === "" || rating === "" || message === "") {
+        alert("Please fill in all fields before submitting your feedback.");
+        return false;
+      }
+
+      const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
+
+      const feedbackRef = ref(database, "feedbacks/");
+      push(feedbackRef, feedbackText)
+        .then(() => {
+          alert("Thank you for your feedback!");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          console.error("Failed to submit feedback:", error);
+          alert("Failed to submit feedback. Please try again.");
+        });
+
+      return false;
+    }
+  </script>
 
 </body>
 </html>
