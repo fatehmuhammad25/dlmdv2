@@ -27,21 +27,12 @@
       border: 2px solid #6A0DAD;
     }
 
-    .card h2 {
+    .card label, .card h2 {
       color: #9b30ff;
       margin-top: 0;
     }
 
-    .card label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    .card input[type="text"],
-    .card input[type="email"],
-    .card textarea,
-    .card select {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -58,14 +49,8 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s;
       display: block;
       margin: 30px auto 0;
-    }
-
-    .submit-button:hover {
-      background-color: #9b30ff;
-      transform: scale(1.05);
     }
 
     .back-button {
@@ -78,12 +63,6 @@
       text-align: center;
       border-radius: 8px;
       width: 200px;
-      transition: background-color 0.3s ease, transform 0.2s;
-    }
-
-    .back-button:hover {
-      background-color: #9b30ff;
-      transform: scale(1.05);
     }
   </style>
 </head>
@@ -91,18 +70,18 @@
 
   <h1>Feedback</h1>
 
-  <form onsubmit="return validateFeedback()">
+  <form id="feedbackForm">
     <div class="card">
       <h2>We'd love to hear from you!</h2>
 
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name">
+      <label>Your Name:</label>
+      <input type="text" id="name">
 
-      <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email">
+      <label>Your Email:</label>
+      <input type="email" id="email">
 
-      <label for="rating">Rate Our LMS (1 = Poor, 5 = Excellent):</label>
-      <select id="rating" name="rating">
+      <label>Rate Our LMS (1 = Poor, 5 = Excellent):</label>
+      <select id="rating">
         <option value="">-- Select Rating --</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -111,8 +90,8 @@
         <option value="5">5</option>
       </select>
 
-      <label for="message">Your Feedback:</label>
-      <textarea id="message" name="message" rows="5"></textarea>
+      <label>Your Feedback:</label>
+      <textarea id="message" rows="5"></textarea>
 
       <button type="submit" class="submit-button">Submit Feedback</button>
     </div>
@@ -120,12 +99,12 @@
 
   <a href="index.html" class="back-button">Back to Home</a>
 
-  <!-- Firebase SDK (type module) -->
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    // Konfigurasi Firebase
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyCFSZxCmEvJtsOUuQXv2MfQlCZxxa5mMcM",
       authDomain: "dlmdv2.firebaseapp.com",
@@ -141,8 +120,11 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
-    // Fungsi kirim feedback ke database
-    window.validateFeedback = function () {
+    // Tangkap event submit form
+    const form = document.getElementById("feedbackForm");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const rating = document.getElementById("rating").value;
@@ -150,7 +132,7 @@
 
       if (name === "" || email === "" || rating === "" || message === "") {
         alert("Please fill in all fields before submitting your feedback.");
-        return false;
+        return;
       }
 
       const feedbackText = `${name} (Rating: ${rating}) : ${message}`;
@@ -165,9 +147,7 @@
           console.error("Failed to submit feedback:", error);
           alert("Failed to submit feedback. Please try again.");
         });
-
-      return false;
-    }
+    });
   </script>
 
 </body>
