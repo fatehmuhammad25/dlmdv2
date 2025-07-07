@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assessment - My LMS Project</title>
   <style>
     body {
@@ -16,6 +17,7 @@
       color: #6A0DAD;
       text-align: center;
       margin-bottom: 30px;
+      font-size: 28px;
     }
 
     .card {
@@ -25,26 +27,38 @@
       padding: 20px;
       border-radius: 10px;
       border: 2px solid #6A0DAD;
+      box-sizing: border-box;
     }
 
     .card h2 {
       color: #9b30ff;
       margin-top: 0;
+      font-size: 22px;
     }
 
     .card p {
       margin-bottom: 10px;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .card input[type="text"],
     .card textarea {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin: 8px 0 16px;
       background-color: #333;
       color: #fff;
       border: 1px solid #6A0DAD;
       border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .card label {
+      display: block;
+      margin: 6px 0;
+      font-size: 15px;
+      cursor: pointer;
     }
 
     .submit-button {
@@ -57,6 +71,7 @@
       transition: background-color 0.3s ease, transform 0.2s;
       display: block;
       margin: 30px auto 0;
+      font-size: 16px;
     }
 
     .submit-button:hover {
@@ -75,6 +90,7 @@
       border-radius: 8px;
       width: 200px;
       transition: background-color 0.3s ease, transform 0.2s;
+      font-size: 16px;
     }
 
     .back-button:hover {
@@ -82,10 +98,31 @@
       transform: scale(1.05);
     }
 
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+      .card {
+        padding: 15px;
+      }
+      .card h2 {
+        font-size: 20px;
+      }
+      .card p {
+        font-size: 14px;
+      }
+      .card label {
+        font-size: 14px;
+      }
+      .submit-button, .back-button {
+        font-size: 14px;
+        padding: 10px 18px;
+      }
+    }
   </style>
+
   <script>
     function validateForm() {
-      // Cek essay kosong
       const essays = document.querySelectorAll('textarea');
       for (let i = 0; i < essays.length; i++) {
         if (essays[i].value.trim() === "") {
@@ -94,7 +131,6 @@
         }
       }
 
-      // Cek pilihan multiple choice
       for (let i = 1; i <= 10; i++) {
         const options = document.getElementsByName("q" + i);
         let selected = false;
@@ -110,9 +146,8 @@
         }
       }
 
-      // Kalau semua terisi, submit ke hasil.html
       window.location.href = "hasil.html";
-      return false; // supaya form nggak reload halaman
+      return false;
     }
   </script>
 </head>
@@ -144,44 +179,44 @@
       <h2>Multiple Choice Questions</h2>
 
       <p>1. Who proposed the Social Constructivism theory?</p>
-      <label><input type="radio" name="q1" value="Vygotsky"> Vygotsky</label><br>
-      <label><input type="radio" name="q1" value="Piaget"> Piaget</label><br>
+      <label><input type="radio" name="q1" value="Vygotsky"> Vygotsky</label>
+      <label><input type="radio" name="q1" value="Piaget"> Piaget</label>
 
       <p>2. Which theory focuses on students' cognitive development stages?</p>
-      <label><input type="radio" name="q2" value="Piaget"> Piaget</label><br>
-      <label><input type="radio" name="q2" value="Vygotsky"> Vygotsky</label><br>
+      <label><input type="radio" name="q2" value="Piaget"> Piaget</label>
+      <label><input type="radio" name="q2" value="Vygotsky"> Vygotsky</label>
 
       <p>3. Who is the creator of Cognitive Load Theory?</p>
-      <label><input type="radio" name="q3" value="Sweller"> Sweller</label><br>
-      <label><input type="radio" name="q3" value="Mayer"> Mayer</label><br>
+      <label><input type="radio" name="q3" value="Sweller"> Sweller</label>
+      <label><input type="radio" name="q3" value="Mayer"> Mayer</label>
 
       <p>4. What is Dual-Channel Processing related to?</p>
-      <label><input type="radio" name="q4" value="Visual and auditory learning"> Visual and auditory learning</label><br>
-      <label><input type="radio" name="q4" value="Cognitive Load"> Cognitive Load</label><br>
+      <label><input type="radio" name="q4" value="Visual and auditory learning"> Visual and auditory learning</label>
+      <label><input type="radio" name="q4" value="Cognitive Load"> Cognitive Load</label>
 
       <p>5. What helps reduce unnecessary cognitive load?</p>
-      <label><input type="radio" name="q5" value="Clear instruction"> Clear instruction</label><br>
-      <label><input type="radio" name="q5" value="Complex wording"> Complex wording</label><br>
+      <label><input type="radio" name="q5" value="Clear instruction"> Clear instruction</label>
+      <label><input type="radio" name="q5" value="Complex wording"> Complex wording</label>
 
       <p>6. What is the function of scaffolding in learning?</p>
-      <label><input type="radio" name="q6" value="Temporary support"> Temporary support</label><br>
-      <label><input type="radio" name="q6" value="Permanent control"> Permanent control</label><br>
+      <label><input type="radio" name="q6" value="Temporary support"> Temporary support</label>
+      <label><input type="radio" name="q6" value="Permanent control"> Permanent control</label>
 
       <p>7. Which theory introduces Zone of Proximal Development (ZPD)?</p>
-      <label><input type="radio" name="q7" value="Vygotsky"> Vygotsky</label><br>
-      <label><input type="radio" name="q7" value="Sweller"> Sweller</label><br>
+      <label><input type="radio" name="q7" value="Vygotsky"> Vygotsky</label>
+      <label><input type="radio" name="q7" value="Sweller"> Sweller</label>
 
       <p>8. Who emphasized learning by stages in children?</p>
-      <label><input type="radio" name="q8" value="Piaget"> Piaget</label><br>
-      <label><input type="radio" name="q8" value="Mayer"> Mayer</label><br>
+      <label><input type="radio" name="q8" value="Piaget"> Piaget</label>
+      <label><input type="radio" name="q8" value="Mayer"> Mayer</label>
 
       <p>9. What does Mayer’s theory focus on?</p>
-      <label><input type="radio" name="q9" value="Multimedia Learning"> Multimedia Learning</label><br>
-      <label><input type="radio" name="q9" value="Behaviorism"> Behaviorism</label><br>
+      <label><input type="radio" name="q9" value="Multimedia Learning"> Multimedia Learning</label>
+      <label><input type="radio" name="q9" value="Behaviorism"> Behaviorism</label>
 
       <p>10. What is intrinsic load in Cognitive Load Theory?</p>
-      <label><input type="radio" name="q10" value="Natural task difficulty"> Natural task difficulty</label><br>
-      <label><input type="radio" name="q10" value="Distraction from material"> Distraction from material</label><br>
+      <label><input type="radio" name="q10" value="Natural task difficulty"> Natural task difficulty</label>
+      <label><input type="radio" name="q10" value="Distraction from material"> Distraction from material</label>
 
     </div>
 
