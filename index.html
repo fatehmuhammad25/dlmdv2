@@ -5,143 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Learning Media Development - Home</title>
   <link rel="icon" type="image/png" href="uwgm.png">
-  <style>
-    /* Reset & Base */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(270deg, #000000, #1a1a1a, #000000);
-      background-size: 600% 600%;
-      animation: gradientShift 10s ease infinite;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    h1 {
-      color: #6A0DAD;
-      margin: 20px 0 30px;
-      text-align: center;
-      font-size: 28px;
-    }
-
-    .card {
-      margin-bottom: 30px;
-      padding: 20px;
-      background-color: #1a1a1a;
-      border: 2px solid #6A0DAD;
-      border-radius: 10px;
-      text-align: left;
-      width: 100%;
-      max-width: 400px;
-      box-sizing: border-box;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .card h2 {
-      margin-top: 0;
-      color: #9b30ff;
-      font-size: 22px;
-      text-align: center;
-    }
-
-    .card:hover {
-      box-shadow: 0 0 15px #9b30ff;
-    }
-
-    /* Grid teori: fix 2 kolom */
-    .menu-grid-theory {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      max-width: 600px;
-      margin-bottom: 30px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    /* Grid umum: auto-fit */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      max-width: 600px;
-      margin-bottom: 30px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .menu-grid a, .menu-grid-theory a {
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      padding: 15px;
-      background-color: #6A0DAD;
-      color: #ffffff;
-      text-align: center;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: background-color 0.3s ease, transform 0.2s;
-      display: block;
-    }
-
-    .menu-grid a:hover, .menu-grid-theory a:hover {
-      background-color: #9b30ff;
-      transform: scale(1.05);
-    }
-
-    .menu-grid a::after, .menu-grid-theory a::after {
-      content: '';
-      position: absolute;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      transform: scale(0);
-      opacity: 0;
-      pointer-events: none;
-      width: 100px;
-      height: 100px;
-      transition: transform 0.6s ease, opacity 1s;
-    }
-
-    .menu-grid a:active::after, .menu-grid-theory a:active::after {
-      transform: translate(-50%, -50%) scale(4);
-      opacity: 0;
-      top: 50%;
-      left: 50%;
-    }
-
-    footer {
-      margin-top: 50px;
-      font-size: 14px;
-      color: #888;
-      text-align: center;
-    }
-
-    #feedback-banner {
-      margin: 20px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 24px; }
-      .card { padding: 15px; }
-      .menu-grid a, .menu-grid-theory a { font-size: 14px; padding: 12px; }
-      .menu-grid-theory { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -203,7 +67,7 @@
 
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-
+    
     // Feedback banner
     const feedbackRef = ref(database, "feedbacks/");
     onValue(feedbackRef, (snapshot) => {
@@ -257,6 +121,5 @@
       typeWriter(h1, originalText, 80);
     };
   </script>
-
 </body>
 </html>
