@@ -11,6 +11,7 @@
       background-color: #000000;
       color: #ffffff;
       padding: 20px;
+      padding-top: 60px; /* tambahkan padding agar konten tidak ketiban progress bar */
     }
 
     h1 {
@@ -21,13 +22,13 @@
     }
 
     .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 800px;
-      margin: 0 auto 30px;
       background-color: #333;
-      border: 1px solid #6A0DAD;
-      border-radius: 6px;
-      overflow: hidden;
+      border-bottom: 2px solid #6A0DAD;
+      z-index: 9999;
     }
 
     .progress-bar {
@@ -200,14 +201,13 @@
 </head>
 <body>
 
-  <h1>Assessment</h1>
-
   <div class="progress-container">
     <div id="progressBar" class="progress-bar">0%</div>
   </div>
 
-  <form onsubmit="return validateForm()">
+  <h1>Assessment</h1>
 
+  <form onsubmit="return validateForm()">
     <div class="card">
       <h2>Essay Questions</h2>
       <p>1. Explain how Vygotsky's Social Constructivism can be applied in a WhatsApp Group learning activity.</p>
