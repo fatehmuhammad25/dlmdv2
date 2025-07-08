@@ -38,6 +38,7 @@
     <a href="assessment.html">Assessment</a>
     <a href="about.html">About</a>
     <a href="tips.html">Tips</a>
+    <a href="pdf-materials.html">PDF Materials</a>
     <a href="feedback.html">Feedback</a>
   </div>
 
@@ -67,7 +68,7 @@
 
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    
+
     // Feedback banner
     const feedbackRef = ref(database, "feedbacks/");
     onValue(feedbackRef, (snapshot) => {
@@ -120,6 +121,11 @@
       h1.textContent = "";
       typeWriter(h1, originalText, 80);
     };
+
+    function toggleMode() {
+      document.body.classList.toggle("light-mode");
+    }
   </script>
+
 </body>
 </html>
