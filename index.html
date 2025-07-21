@@ -9,29 +9,28 @@
 </head>
 <body>
 
-  <!-- Modal Absen -->
-  <div id="absen-modal" class="modal">
+  <!-- Modal Form Absen -->
+  <div id="absenModal" class="modal">
     <div class="modal-content">
-      <h2>Absensi Kehadiran</h2>
+      <h2>Form Absen</h2>
       <form id="absenForm">
         <label for="nama">Nama:</label>
-        <input type="text" id="nama" name="nama" required />
-
+        <input type="text" id="nama" required>
         <label for="status">Status Absen:</label>
-        <select id="status" name="status" required>
+        <select id="status" required>
           <option value="">--Pilih--</option>
           <option value="Hadir">Hadir</option>
           <option value="Izin">Izin</option>
           <option value="Sakit">Sakit</option>
         </select>
-
         <button type="submit">Kirim</button>
       </form>
     </div>
   </div>
 
-  <!-- Feedback dan Konten -->
+  <!-- Banner Feedback -->
   <div id="feedback-banner"></div>
+
   <h1>Welcome to My LMS Project</h1>
 
   <div class="card">
@@ -68,10 +67,10 @@
 
   <footer>
     &copy; 2025 Fateh's LMS | Made with 💜<br>
-    <span style="font-size:13px; color:#666;">Last updated: July 21, 2025</span>
+    <span style="font-size:13px; color:#666;">Last updated: July 6, 2025</span>
   </footer>
 
-  <!-- Firebase SDK dan Script Utama -->
+  <!-- Firebase SDK & Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue, runTransaction, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -107,25 +106,32 @@
       }
     });
 
-    // Visitor Counter
+    // Visitor Count
     const visitorCountRef = ref(database, "visitorCount");
     runTransaction(visitorCountRef, (currentCount) => (currentCount || 0) + 1);
     onValue(visitorCountRef, (snapshot) => {
       document.getElementById("visitor-count").innerText = "Total Visits: " + snapshot.val();
     });
 
-    // Waktu
+    // Waktu Sekarang
     setInterval(() => {
       const now = new Date();
       document.getElementById("datetime").innerText = now.toLocaleString();
     }, 1000);
 
-    // Form Absensi
+    // Form Absen (once only using localStorage)
+    const absenModal = document.getElementById("absenModal");
     const absenForm = document.getElementById("absenForm");
+
+    if (!localStorage.getItem("sudahAbsen")) {
+      absenModal.style.display = "flex";
+    }
+
     absenForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const nama = document.getElementById("nama").value.trim();
       const status = document.getElementById("status").value;
+
       if (nama && status) {
         const timestamp = new Date().toISOString();
         const absenRef = ref(database, "absensi/" + timestamp.replace(/[:.]/g, "-"));
@@ -134,20 +140,11 @@
           status: status,
           waktu: timestamp
         }).then(() => {
-          document.getElementById("absen-modal").style.display = "none";
+          localStorage.setItem("sudahAbsen", "true");
+          absenModal.style.display = "none";
+          alert("Terima kasih sudah absen, " + nama + "!");
         });
       }
-    });
-
-    // Tampilkan Modal Absensi
-    window.addEventListener("load", () => {
-      document.body.style.opacity = 1;
-      document.getElementById("absen-modal").style.display = "flex";
-
-      const h1 = document.querySelector("h1");
-      const originalText = h1.textContent;
-      h1.textContent = "";
-      typeWriter(h1, originalText, 80);
     });
 
     // Typewriter
@@ -163,10 +160,15 @@
       typing();
     }
 
-    // Toggle Mode (jika kamu tambahkan tombol)
-    function toggleMode() {
-      document.body.classList.toggle("light-mode");
-    }
+    // Fade In & Typewriter
+    window.addEventListener("load", () => {
+      document.body.style.opacity = 1;
+      const h1 = document.querySelector("h1");
+      const originalText = h1.textContent;
+      h1.textContent = "";
+      typeWriter(h1, originalText, 80);
+    });
   </script>
+
 </body>
 </html>
